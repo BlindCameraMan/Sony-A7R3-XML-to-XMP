@@ -3,8 +3,8 @@ import exiftool
 from exiftool import ExifToolHelper
 import xml.etree.ElementTree as ET
 
-x = 0
-os.chdir(r"D:\Documents\Python\Sony A7R3 XML to XMP\test videos")
+# x = 0
+os.chdir("test videos")
 xml_files_list = []
 with os.scandir() as xmlListEntries:
  for entry in xmlListEntries:
@@ -19,9 +19,22 @@ with os.scandir() as xmlListEntries:
 #         namespaces['ns'] = uri  # Assign 'ns' to the default namespace URI
 #     else:
 #         namespaces[prefix] = uri
+# mp4_files_list = []
+# with os.scandir as mp4ListEntries:
+#     for entry in mp4ListEntries:
+#         if entry.is_file() and entry.name.lower().endswith('.mp4'):
+#             mp4_files_list.append(entry.name)
+# print(mp4_files_list)
 
 for xml_file in xml_files_list:
 #     print(xml_file)
+    if len(xml_file) == 12: #If the xml is the default sony name (c0001m01.xml) convert it to match the mp4.
+        filename = str(xml_file[:-7]) + ".xmp"
+        print(filename)
+    elif len(xml_file) >= 12: #If xml already renamed keep the same name
+        filename = str(xml_file[:-4]) + ".xmp"
+#         filename = f'"{filename}"'
+        print(filename)
     tags = {}
     tree = ET.parse(xml_file)
     root = tree.getroot()
@@ -127,9 +140,10 @@ for xml_file in xml_files_list:
         print(longitudeDD)
         tags.update({"XMP:GPSLatitude": latitudeDD, "XMP:GPSLongitude": longitudeDD})
         tags["xmp-exif:GPSDateTime"] = (f'{xml_DateStamp} {xml_TimeStamp}')
-    x = x + 1
-    filename = f"test{x}.xmp"
-    print(filename)
+#     x = x + 1
+#     filename = f"test{x}.xmp"
+#     print(filename)
+    print(filename, tags)
     with ExifToolHelper() as et:
         et.set_tags(
             filename,
