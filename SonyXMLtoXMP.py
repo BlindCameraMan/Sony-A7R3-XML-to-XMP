@@ -4,7 +4,7 @@ from exiftool import ExifToolHelper
 import xml.etree.ElementTree as ET
 
 # x = 0
-os.chdir("test videos")
+# os.chdir("test videos")
 xml_files_list = []
 with os.scandir() as xmlListEntries:
  for entry in xmlListEntries:
