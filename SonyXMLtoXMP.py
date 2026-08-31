@@ -1,3 +1,5 @@
+# Sony XML to XMP python script by Blind Camera Guy
+# Run the script from a terminal open in a folder containing your XML files.
 import os
 import exiftool
 from exiftool import ExifToolHelper
